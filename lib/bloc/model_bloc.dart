@@ -5,6 +5,7 @@ import 'package:sharqmotors/bloc/producer_event.dart';
 import 'package:sharqmotors/bloc/producer_state.dart';
 
 import '../models/ModelSet.dart';
+import '../models/OptionSet.dart';
 import '../services/producer_repository.dart';
 
 class ModelBloc extends Bloc<ProducerEvent, ProducerState> {
@@ -37,5 +38,8 @@ class ModelBloc extends Bloc<ProducerEvent, ProducerState> {
 
   Future postImage(String url, String id, Uint8List data) {
     return repository.postImage(url, id, data);
+  }
+  Future<ModelSet> addOption(String url, OptionSet optionSet, String id) {
+    return repository.postOption(url, optionSet, id);
   }
 }

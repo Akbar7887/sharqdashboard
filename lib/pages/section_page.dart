@@ -28,6 +28,8 @@ class _SectionPageState extends State<SectionPage> {
   final _formkeyname = GlobalKey<FormState>();
   final _formkeynameuz = GlobalKey<FormState>();
   Uint8List? _webImage;
+  SectionBloc? sectionBloc;
+
 
   @override
   void initState() {
@@ -70,7 +72,7 @@ class _SectionPageState extends State<SectionPage> {
   }
 
   Widget tabledata() {
-    SectionBloc sectionBloc = BlocProvider.of<SectionBloc>(context);
+    sectionBloc = BlocProvider.of<SectionBloc>(context);
     // TextEditingController _namecontroller = TextEditingController();
     return SingleChildScrollView(
         scrollDirection: Axis.vertical,
@@ -122,7 +124,7 @@ class _SectionPageState extends State<SectionPage> {
                         DataCell(Icon(Icons.delete), onTap: () {
                           Map<String, dynamic> param = {'id': e.id.toString()};
 
-                          sectionBloc
+                          sectionBloc!
                               .remove('removesection', param)
                               .then((value) {
                             setState(() {

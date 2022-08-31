@@ -52,8 +52,9 @@ class _OptionConstantPageState extends State<OptionConstantPage> {
         }
         if (state is OptionConstantLoadedState) {
           // setState(() {
-            _list = state.loadedoptionconstant;
+          _list = state.loadedoptionconstant;
 
+          _list.sort((a,b) => a.namerus!.compareTo(b.namerus!));
           // });
           return tabledata();
         }
@@ -71,7 +72,7 @@ class _OptionConstantPageState extends State<OptionConstantPage> {
 
   Widget tabledata() {
     OptionConstantBloc optionConstantBloc =
-        BlocProvider.of<OptionConstantBloc>(context);
+    BlocProvider.of<OptionConstantBloc>(context);
     // TextEditingController _namecontroller = TextEditingController();
     return SingleChildScrollView(
         scrollDirection: Axis.vertical,
@@ -79,52 +80,52 @@ class _OptionConstantPageState extends State<OptionConstantPage> {
             height: MediaQuery.of(context).size.height,
             child: Card(
                 child: ListView(
-              // crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  padding: EdgeInsets.all(20),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      optionConstant = OptionConstant(namerus: "", nameuz: "");
-                      _webImage = null;
-                      showDialogform();
-                    },
-                    child: Text("Добавить"),
-                  ),
-                ),
-                DataTable(
-                    headingRowHeight: 30.0,
-                    columns: [
-                      DataColumn(label: Text("№")),
-                      DataColumn(label: Text("Наименование (Рус)")),
-                      DataColumn(label: Text("Наименование (Узб)")),
-                      DataColumn(label: Text('Изменить')),
-                      DataColumn(label: Text('Удалить')),
-                    ],
-                    rows: _list.map((e) {
-                      return DataRow(cells: [
-                        DataCell(Text((_list.indexOf(e) + 1).toString())),
-                        DataCell(Text(e.namerus!)),
-                        DataCell(Text(e.nameuz!)),
-                        DataCell(Icon(Icons.edit), onTap: () {
-                          optionConstant = e;
+                  // crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      padding: EdgeInsets.all(20),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          optionConstant = OptionConstant(namerus: "", nameuz: "");
+                          _webImage = null;
                           showDialogform();
-                        }),
-                        DataCell(Icon(Icons.delete), onTap: () {
-                          Map<String, dynamic> param = {'id': e.id.toString()};
+                        },
+                        child: Text("Добавить"),
+                      ),
+                    ),
+                    DataTable(
+                        headingRowHeight: 30.0,
+                        columns: [
+                          DataColumn(label: Text("№")),
+                          DataColumn(label: Text("Наименование (Рус)")),
+                          DataColumn(label: Text("Наименование (Узб)")),
+                          DataColumn(label: Text('Изменить')),
+                          DataColumn(label: Text('Удалить')),
+                        ],
+                        rows: _list.map((e) {
+                          return DataRow(cells: [
+                            DataCell(Text((_list.indexOf(e) + 1).toString())),
+                            DataCell(Text(e.namerus!)),
+                            DataCell(Text(e.nameuz!)),
+                            DataCell(Icon(Icons.edit), onTap: () {
+                              optionConstant = e;
+                              showDialogform();
+                            }),
+                            DataCell(Icon(Icons.delete), onTap: () {
+                              Map<String, dynamic> param = {'id': e.id.toString()};
 
-                          optionConstantBloc
-                              .remove('removeoptionconstant', param)
-                              .then((value) {
-                            setState(() {
-                              _list.remove(e);
-                            });
-                          });
-                        })
-                      ]);
-                    }).toList()),
-              ],
-            ))));
+                              optionConstantBloc
+                                  .remove('removeoptionconstant', param)
+                                  .then((value) {
+                                setState(() {
+                                  _list.remove(e);
+                                });
+                              });
+                            })
+                          ]);
+                        }).toList()),
+                  ],
+                ))));
   }
 
   Future<void> showDialogform() async {
@@ -132,7 +133,7 @@ class _OptionConstantPageState extends State<OptionConstantPage> {
     _namerus.text = optionConstant.namerus!;
 
     OptionConstantBloc optionConstantBloc =
-        BlocProvider.of<OptionConstantBloc>(context);
+    BlocProvider.of<OptionConstantBloc>(context);
 
     return await showDialog(
         context: context,
@@ -161,7 +162,7 @@ class _OptionConstantPageState extends State<OptionConstantPage> {
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(5),
                               borderSide:
-                                  BorderSide(width: 0.5, color: Colors.blue)),
+                              BorderSide(width: 0.5, color: Colors.blue)),
                         ),
                         controller: _namerus,
                         validator: (value) {
@@ -182,7 +183,7 @@ class _OptionConstantPageState extends State<OptionConstantPage> {
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(5),
                               borderSide:
-                                  BorderSide(width: 0.5, color: Colors.blue)),
+                              BorderSide(width: 0.5, color: Colors.blue)),
                         ),
                         controller: _nameuz,
                         validator: (value) {

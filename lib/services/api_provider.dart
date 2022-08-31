@@ -66,7 +66,7 @@ class ApiProvider {
     Uri uri = Uri.parse("${Ui.url}customeradd");
 
     final response =
-        await http.post(uri, body: json.encode(customer), headers: header);
+    await http.post(uri, body: json.encode(customer), headers: header);
     if (response.statusCode == 200) {
       var json = jsonDecode(utf8.decode(response.bodyBytes));
 
@@ -142,7 +142,7 @@ class ApiProvider {
     Uri uri = Uri.parse("${Ui.url}sectionadd");
 
     final response =
-        await http.post(uri, body: json.encode(section), headers: header);
+    await http.post(uri, body: json.encode(section), headers: header);
     if (response.statusCode == 200) {
       var json = jsonDecode(utf8.decode(response.bodyBytes));
 
@@ -164,11 +164,11 @@ class ApiProvider {
     request.files
         .add(http.MultipartFile.fromBytes("file", list, filename: ('$id.png')));
     request.send().then((value) => {
-          if (value.statusCode == 200)
-            {print('Ok')}
-          else
-            {print(value.statusCode)}
-        });
+      if (value.statusCode == 200)
+        {print('Ok')}
+      else
+        {print(value.statusCode)}
+    });
   }
 
   Future remove(String url, Map<String, dynamic> param) async {
@@ -192,7 +192,7 @@ class ApiProvider {
     Uri uri = Uri.parse("${Ui.url}${url}");
 
     final response =
-        await http.post(uri, body: json.encode(producer), headers: header);
+    await http.post(uri, body: json.encode(producer), headers: header);
     if (response.statusCode == 200) {
       final json = jsonDecode(utf8.decode(response.bodyBytes));
 
@@ -208,7 +208,7 @@ class ApiProvider {
     Uri uri = Uri.parse("${Ui.url}${url}");
 
     final response =
-        await http.post(uri, body: json.encode(newsCompany), headers: header);
+    await http.post(uri, body: json.encode(newsCompany), headers: header);
     if (response.statusCode == 200) {
       final json = jsonDecode(utf8.decode(response.bodyBytes));
 
@@ -259,7 +259,7 @@ class ApiProvider {
     Uri uri = Uri.parse("${Ui.url}${url}").replace(queryParameters: quiryParam);
 
     final response =
-        await http.post(uri, body: json.encode(modelSet), headers: header);
+    await http.post(uri, body: json.encode(modelSet), headers: header);
     if (response.statusCode == 200) {
       final json = jsonDecode(utf8.decode(response.bodyBytes));
 
@@ -269,7 +269,7 @@ class ApiProvider {
     }
   }
 
-  Future<OptionSet> postOption(
+  Future<ModelSet> postOption(
       String url, OptionSet optionSet, String id) async {
     token = await _storage.read(key: "token");
     header["Authorization"] = "Bearer ${token}";
@@ -279,11 +279,11 @@ class ApiProvider {
     Uri uri = Uri.parse("${Ui.url}${url}").replace(queryParameters: quiryParam);
 
     final response =
-        await http.post(uri, body: json.encode(optionSet), headers: header);
+    await http.post(uri, body: json.encode(optionSet), headers: header);
     if (response.statusCode == 200) {
       final json = jsonDecode(utf8.decode(response.bodyBytes));
 
-      return OptionSet.fromJson(json);
+      return ModelSet.fromJson(json);
     } else {
       throw Exception("Error connect");
     }
@@ -310,7 +310,7 @@ class ApiProvider {
     Uri uri = Uri.parse("${Ui.url}${url}");
 
     final response =
-        await http.post(uri, body: json.encode(rate), headers: header);
+    await http.post(uri, body: json.encode(rate), headers: header);
     if (response.statusCode == 200) {
       final json = jsonDecode(utf8.decode(response.bodyBytes));
 
@@ -349,7 +349,7 @@ class ApiProvider {
 
     if (response.statusCode == 200 || response.statusCode == 201) {
       Map<String, dynamic> l = jsonDecode(utf8.decode(response.bodyBytes));
-      _storage.write(key: 'token', value: l['access_token']);
+      await _storage.write(key: 'token', value: l['access_token']);
       return true;
     } else {
       return false;
@@ -379,7 +379,7 @@ class ApiProvider {
     Uri uri = Uri.parse("${Ui.urllogin}${url}");
 
     final response =
-        await http.post(uri, body: json.encode(customerOrder), headers: header);
+    await http.post(uri, body: json.encode(customerOrder), headers: header);
     if (response.statusCode == 200) {
       final json = jsonDecode(utf8.decode(response.bodyBytes));
 

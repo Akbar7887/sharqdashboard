@@ -109,7 +109,7 @@ class _HomeState extends State<Home> {
                             alignment: Alignment.centerLeft,
                             child: Text(
                               "Тип автотранспорта",
-                              style: TextStyle(fontSize: 20),
+                              style: TextStyle(fontSize: 15),
                             )),
                       ),
                       width: MediaQuery.of(context).size.width,
@@ -124,7 +124,7 @@ class _HomeState extends State<Home> {
                             alignment: Alignment.centerLeft,
                             child: Text(
                               "Производитель",
-                              style: TextStyle(fontSize: 20),
+                              style: TextStyle(fontSize: 15),
                             )),
                       ),
                       width: MediaQuery.of(context).size.width,
@@ -139,7 +139,7 @@ class _HomeState extends State<Home> {
                             alignment: Alignment.centerLeft,
                             child: Text(
                               "Характеристика константа",
-                              style: TextStyle(fontSize: 20),
+                              style: TextStyle(fontSize: 15),
                             )),
                       ),
                       width: MediaQuery.of(context).size.width,
@@ -154,7 +154,7 @@ class _HomeState extends State<Home> {
                             alignment: Alignment.centerLeft,
                             child: Text(
                               "Модели (Остаток)",
-                              style: TextStyle(fontSize: 20),
+                              style: TextStyle(fontSize: 15),
                             )),
                       ),
                       width: MediaQuery.of(context).size.width,
@@ -169,7 +169,7 @@ class _HomeState extends State<Home> {
                             alignment: Alignment.centerLeft,
                             child: Text(
                               "Модели и характеристики",
-                              style: TextStyle(fontSize: 20),
+                              style: TextStyle(fontSize: 15),
                             )),
                       ),
                       width: MediaQuery.of(context).size.width,
@@ -184,7 +184,7 @@ class _HomeState extends State<Home> {
                             alignment: Alignment.centerLeft,
                             child: Text(
                               "Новости",
-                              style: TextStyle(fontSize: 20),
+                              style: TextStyle(fontSize: 15),
                             )),
                       ),
                       width: MediaQuery.of(context).size.width,
@@ -199,7 +199,7 @@ class _HomeState extends State<Home> {
                             alignment: Alignment.centerLeft,
                             child: Text(
                               "Курс валют",
-                              style: TextStyle(fontSize: 20),
+                              style: TextStyle(fontSize: 15),
                             )),
                       ),
                       width: MediaQuery.of(context).size.width,
@@ -214,7 +214,7 @@ class _HomeState extends State<Home> {
                             alignment: Alignment.centerLeft,
                             child: Text(
                               "Заказ звонка от клиентов",
-                              style: TextStyle(fontSize: 20),
+                              style: TextStyle(fontSize: 15),
                             )),
                       ),
                       width: MediaQuery.of(context).size.width,
@@ -223,7 +223,7 @@ class _HomeState extends State<Home> {
                   ],
                 ))),
         Expanded(
-          flex: 4,
+          flex: 5,
           child: selectionPage(context.watch<SimpleProvider>().getpage),
         ),
       ],

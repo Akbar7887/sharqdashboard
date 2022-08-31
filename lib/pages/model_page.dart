@@ -147,95 +147,95 @@ class _ModelPageState extends State<ModelPage> {
             // width: MediaQuery.of(context).size.width,
             child: Card(
                 child: ListView(
-              // crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  // width: 100,
-                  padding: EdgeInsets.all(20),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      modelSet = ModelSet(
-                          name: "",
-                          description: "",
-                          descriptionuz: "",
-                          imagepath: "");
-                      _webImage = null;
-                      producer = null;
-                      section = null;
-                      showDialogWidget();
-                    },
-                    child: Text("Добавить"),
-                  ),
-                ),
-                DataTable(
-                    headingRowHeight: 30.0,
-                    columns: [
-                      DataColumn(label: Text("№")),
-                      DataColumn(label: Text("Марка")),
-                      DataColumn(label: Text("Модель")),
-                      DataColumn(label: Text("Цена USD")),
-                      DataColumn(label: Text("Цена SUM")),
-                      DataColumn(label: Text("Описание")),
-                      DataColumn(label: Text("Картинка")),
-                      DataColumn(label: Text('Изменить')),
-                      DataColumn(label: Text('Удалить')),
-                    ],
-                    rows: _list.map((e) {
-                      // optionConstant = e.optionSet?.first.optionConstant;
-                      return DataRow(cells: [
-                        DataCell(Text((_list.indexOf(e) + 1).toString())),
-                        DataCell(Text(
-                          e.producername!,
-                          style: TextStyle(fontSize: 10),
-                        )),
-                        DataCell(Text(e.name!, style: TextStyle(fontSize: 10))),
-                        DataCell(Text(e.price.toString(),
-                            style: TextStyle(fontSize: 15))),
-                        DataCell(Text(e.priceuzs.toString(),
-                            style: TextStyle(fontSize: 15))),
-                        DataCell(Text(e.description!,
-                            style: TextStyle(fontSize: 15))),
-                        DataCell(Image.network(
-                          "${Ui.url}download/model/${e.imagepath}",
-                          width: 50,
-                          errorBuilder: (context, error, stackTrace) {
-                            return Icon(Icons.error);
-                          },
-                        )),
-                        DataCell(Icon(Icons.edit), onTap: () {
-                          modelSet = e;
-                          section = _listSection[_listSection.indexWhere(
-                              (element) => element.id == e.section!.id)];
-                          producer = _listProducers[_listProducers.indexWhere(
-                              (element) => element.name == e.producername)];
-                          // producer = e.producername
-                          (_listSection.length == 0)
-                              ? Container()
-                              : showDialogWidget();
-                        }),
-                        DataCell(Icon(Icons.delete), onTap: () {
-                          Map<String, dynamic> param = {'id': e.id.toString()};
+                  // crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      // width: 100,
+                      padding: EdgeInsets.all(20),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          modelSet = ModelSet(
+                              name: "",
+                              description: "",
+                              descriptionuz: "",
+                              imagepath: "");
+                          _webImage = null;
+                          producer = null;
+                          section = null;
+                          showDialogWidget();
+                        },
+                        child: Text("Добавить"),
+                      ),
+                    ),
+                    DataTable(
+                        headingRowHeight: 30.0,
+                        columns: [
+                          DataColumn(label: Text("№")),
+                          DataColumn(label: Text("Марка")),
+                          DataColumn(label: Text("Модель")),
+                          DataColumn(label: Text("Цена USD")),
+                          DataColumn(label: Text("Цена SUM")),
+                          DataColumn(label: Text("Описание")),
+                          DataColumn(label: Text("Картинка")),
+                          DataColumn(label: Text('Изменить')),
+                          DataColumn(label: Text('Удалить')),
+                        ],
+                        rows: _list.map((e) {
+                          // optionConstant = e.optionSet?.first.optionConstant;
+                          return DataRow(cells: [
+                            DataCell(Text((_list.indexOf(e) + 1).toString())),
+                            DataCell(Text(
+                              e.producername!,
+                              style: TextStyle(fontSize: 10),
+                            )),
+                            DataCell(Text(e.name!, style: TextStyle(fontSize: 10))),
+                            DataCell(Text(e.price.toString(),
+                                style: TextStyle(fontSize: 15))),
+                            DataCell(Text(e.priceuzs.toString(),
+                                style: TextStyle(fontSize: 15))),
+                            DataCell(Text(e.description!,
+                                style: TextStyle(fontSize: 15))),
+                            DataCell(Image.network(
+                              "${Ui.url}download/model/${e.imagepath}",
+                              width: 50,
+                              errorBuilder: (context, error, stackTrace) {
+                                return Icon(Icons.error);
+                              },
+                            )),
+                            DataCell(Icon(Icons.edit), onTap: () {
+                              modelSet = e;
+                              section = _listSection[_listSection.indexWhere(
+                                      (element) => element.id == e.section!.id)];
+                              producer = _listProducers[_listProducers.indexWhere(
+                                      (element) => element.name == e.producername)];
+                              // producer = e.producername
+                              (_listSection.length == 0)
+                                  ? Container()
+                                  : showDialogWidget();
+                            }),
+                            DataCell(Icon(Icons.delete), onTap: () {
+                              Map<String, dynamic> param = {'id': e.id.toString()};
 
-                          modelBloc.remove('removemodel', param).then((value) {
-                            setState(() {
-                              _list.remove(e);
-                            });
-                          });
-                        })
-                      ]);
-                    }).toList()),
-              ],
-            ))));
+                              modelBloc.remove('removemodel', param).then((value) {
+                                setState(() {
+                                  _list.remove(e);
+                                });
+                              });
+                            })
+                          ]);
+                        }).toList()),
+                  ],
+                ))));
   }
 
   Future<void> showDialogWidget() async {
     _nameController.text = (modelSet?.name == null ? "" : modelSet?.name)!;
     _priceController.text =
-        (modelSet?.price.toString() == null ? "" : modelSet!.price.toString());
+    (modelSet?.price.toString() == null ? "" : modelSet!.price.toString());
     _descriptionController.text =
-        (modelSet?.description == null ? "" : modelSet?.description)!;
+    (modelSet?.description == null ? "" : modelSet?.description)!;
     _descriptionuzController.text =
-        (modelSet?.descriptionuz == null ? "" : modelSet?.descriptionuz)!;
+    (modelSet?.descriptionuz == null ? "" : modelSet?.descriptionuz)!;
     ModelBloc modelBloc = BlocProvider.of<ModelBloc>(context);
 
     return await showDialog(
@@ -245,7 +245,7 @@ class _ModelPageState extends State<ModelPage> {
           return StatefulBuilder(builder: (context, setState) {
             Future<File?> pickImage() async {
               XFile? image =
-                  await ImagePicker().pickImage(source: ImageSource.gallery);
+              await ImagePicker().pickImage(source: ImageSource.gallery);
               if (image != null) {
                 var f = await image.readAsBytes();
                 setState(() {
@@ -263,32 +263,32 @@ class _ModelPageState extends State<ModelPage> {
                     children: [
                       Container(
                           child: Row(children: [
-                        Expanded(
-                            child: DropdownButton<Producer>(
-                          items: itemProduceDropDown(),
-                          value: producer,
-                          isExpanded: true,
-                          hint: Text("Марка"),
-                          onChanged: (Producer? newValue) {
-                            setState(() {
-                              producer = newValue;
-                            });
-                          },
-                        )),
-                        Expanded(
-                          child: DropdownButton<Section>(
-                            items: itemSectionDropDown(),
-                            value: section,
-                            isExpanded: true,
-                            hint: Text("Секция"),
-                            onChanged: (Section? newValue) {
-                              setState(() {
-                                section = newValue;
-                              });
-                            },
-                          ),
-                        ),
-                      ])),
+                            Expanded(
+                                child: DropdownButton<Producer>(
+                                  items: itemProduceDropDown(),
+                                  value: producer,
+                                  isExpanded: true,
+                                  hint: Text("Марка"),
+                                  onChanged: (Producer? newValue) {
+                                    setState(() {
+                                      producer = newValue;
+                                    });
+                                  },
+                                )),
+                            Expanded(
+                              child: DropdownButton<Section>(
+                                items: itemSectionDropDown(),
+                                value: section,
+                                isExpanded: true,
+                                hint: Text("Секция"),
+                                onChanged: (Section? newValue) {
+                                  setState(() {
+                                    section = newValue;
+                                  });
+                                },
+                              ),
+                            ),
+                          ])),
                       SizedBox(
                         width: 20,
                       ),
@@ -317,7 +317,7 @@ class _ModelPageState extends State<ModelPage> {
                         height: 10,
                       ),
                       Container(
-                          // height: 100,
+                        // height: 100,
                           child: Form(
                               key: _globalKey_description,
                               child: TextFormField(
@@ -366,7 +366,7 @@ class _ModelPageState extends State<ModelPage> {
                         height: 10,
                       ),
                       Container(
-                          // alignment: Alignment.centerLeft,
+                        // alignment: Alignment.centerLeft,
                           width: 300,
                           child: Form(
                               key: _globalKey_price,
@@ -391,19 +391,19 @@ class _ModelPageState extends State<ModelPage> {
                             children: [
                               _webImage == null
                                   ? Image.network(
-                                      "${Ui.url}download/model/${modelSet!.imagepath}",
-                                      width: 200,
-                                      height: 200, errorBuilder:
-                                          (BuildContext context, Object error,
-                                              StackTrace? stackTrace) {
-                                      return Icon(Icons.photo);
-                                    })
+                                  "${Ui.url}download/model/${modelSet!.imagepath}",
+                                  width: 200,
+                                  height: 200, errorBuilder:
+                                  (BuildContext context, Object error,
+                                  StackTrace? stackTrace) {
+                                return Icon(Icons.photo);
+                              })
                                   : Container(
-                                      child: Image.memory(
-                                      _webImage!,
-                                      width: 200,
-                                      height: 200,
-                                    )),
+                                  child: Image.memory(
+                                    _webImage!,
+                                    width: 200,
+                                    height: 200,
+                                  )),
                               SizedBox(
                                 width: 50,
                               ),
@@ -432,12 +432,12 @@ class _ModelPageState extends State<ModelPage> {
 
                     modelBloc
                         .postModel(
-                            "modeladd", modelSet!, producer!.id!.toString())
+                        "modeladd", modelSet!, producer!.id!.toString())
                         .then((value) {
                       if (_webImage != null) {
                         modelBloc
                             .postImage(
-                                "modelupload", value.id.toString(), _webImage!)
+                            "modelupload", value.id.toString(), _webImage!)
                             .then((value) {});
                       } else {
                         modelBloc.add(ProducerLoadEvent());

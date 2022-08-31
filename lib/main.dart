@@ -6,6 +6,8 @@ import 'package:provider/provider.dart';
 import 'package:sharqmotors/pages/login_page.dart';
 import 'package:sharqmotors/provider/simle_provider.dart';
 
+import 'models/ui.dart';
+
 
 class MyHttpOverrides extends HttpOverrides {
   @override
@@ -46,12 +48,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Tas group',
+      title: Ui.name,
       theme: ThemeData(
         textTheme: TextTheme(),
         // colorScheme: Colors.grey
         // textButtonTheme: TextButtonThemeData(style: ButtonStyle(textStyle: MaterialStateProperty.)),
-        primarySwatch: Colors.yellow,
+        primarySwatch: Colors.blueGrey,
       ),
       initialRoute: '/',
       routes: {

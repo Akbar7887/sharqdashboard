@@ -54,7 +54,7 @@ class Repository {
     return _apiProvider.postModel(url, modelSet, id);
   }
 
-  Future postOption(String url, OptionSet optionSet, String id) {
+  Future<ModelSet> postOption(String url, OptionSet optionSet, String id) {
     return _apiProvider.postOption(url, optionSet, id);
   }
 

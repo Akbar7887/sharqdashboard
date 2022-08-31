@@ -6,6 +6,7 @@ import '../bloc/model_bloc.dart';
 import '../bloc/option_bloc.dart';
 import '../bloc/option_constant_bloc.dart';
 import '../bloc/producer_bloc.dart';
+import '../bloc/producer_event.dart';
 import '../bloc/producer_state.dart';
 import '../models/ModelSet.dart';
 import '../models/OptionConstant.dart';
@@ -23,8 +24,8 @@ class _ModelOptionState extends State<ModelOption> {
   List<ModelSet> _list = [];
   ModelSet? modelSet;
 
-  // List<OptionSet> _listOptionSet = [];
-  List<OptionConstant> _options = [];
+  List<OptionSet> _listOptionSet = [];
+  List<OptionConstant> _optionconstants = [];
   OptionConstantBloc? optionConstantBloc;
   int idx = 0;
   int index = 0;
@@ -37,13 +38,14 @@ class _ModelOptionState extends State<ModelOption> {
 
   void getApiAll() {
     optionConstantBloc!.getAll().then((value) {
-      return _options = value;
+      return _optionconstants = value;
     });
   }
 
   @override
   void initState() {
     optionConstantBloc = BlocProvider.of<OptionConstantBloc>(context);
+    modelBloc = BlocProvider.of<ModelBloc>(context);
     optionBloc = BlocProvider.of<OptionBloc>(context);
     // modelBloc.on((event, emit) => null)
     getApiAll();
@@ -64,7 +66,8 @@ class _ModelOptionState extends State<ModelOption> {
         if (state is ModelLoadedState) {
           _list = state.loadedModel;
           _model = _list.first;
-          _model!.optionSet!.sort((a, b) => a.id!.compareTo(b.id!));
+          _listOptionSet = _model!.optionSet!;
+          // _model!.optionSet!.sort((a, b) => a.id!.compareTo(b.id!));
 
           return main(context);
         }
@@ -104,7 +107,7 @@ class _ModelOptionState extends State<ModelOption> {
                   child: Container(
                       padding: EdgeInsets.all(5),
                       child: Card(
-                          // decoration: BoxDecoration(border: Border.all(color: Colors.black)),
+                        // decoration: BoxDecoration(border: Border.all(color: Colors.black)),
                           child: ListView.builder(
                               itemCount: _list.length,
                               itemBuilder: (context, idx) {
@@ -127,6 +130,8 @@ class _ModelOptionState extends State<ModelOption> {
                                       setState(() {
                                         index = idx;
                                         _model = _list[index];
+                                        _listOptionSet =
+                                        _list[index].optionSet!;
                                         // optionTable(context, setState);
                                       });
                                     },
@@ -140,7 +145,7 @@ class _ModelOptionState extends State<ModelOption> {
                         padding: EdgeInsets.all(5),
                         // height: MediaQuery.of(context).size.height,
                         child: Card(
-                            // decoration: BoxDecoration(border: Border.all(color: Colors.black)),
+                          // decoration: BoxDecoration(border: Border.all(color: Colors.black)),
                             child: optionTable(context, setState))))
               ],
             ),
@@ -151,6 +156,8 @@ class _ModelOptionState extends State<ModelOption> {
   }
 
   Widget optionTable(BuildContext context, setState) {
+    _listOptionSet =
+        _listOptionSet.where((element) => element.active == 'ACTIVE').toList();
     return Column(children: [
       // SizedBox(height: 20,),
       Container(
@@ -176,7 +183,7 @@ class _ModelOptionState extends State<ModelOption> {
           ),
           onPressed: () {
             // setState(() {
-            shownewdialog(context, setState);
+            shownewdialog();
             // _listOptionSet.add(OptionSet());
             // });
           },
@@ -186,57 +193,48 @@ class _ModelOptionState extends State<ModelOption> {
           flex: 5,
           child: SingleChildScrollView(
               child: DataTable(
-                  // columnSpacing: 150,
+                // columnSpacing: 150,
                   columns: [
-                DataColumn(label: Text("№")),
-                DataColumn(label: Text("Характеристика")),
-                DataColumn(label: Text("Значение")),
-                DataColumn(label: Text("Удалить")),
-              ],
-                  rows: _model!.optionSet!.map((e) {
+                    DataColumn(label: Text("№")),
+                    DataColumn(label: Text("Характеристика")),
+                    DataColumn(label: Text("Значение")),
+                    DataColumn(label: Text("Удалить")),
+                  ],
+                  rows: _listOptionSet.map((e) {
                     TextEditingController textEditingController =
-                        TextEditingController();
+                    TextEditingController();
                     textEditingController.text = e.optionname!;
-                    idx = _options.indexWhere(
-                        (element) => element.id == e.optionConstant!.id);
-                    OptionConstant optionConstant = _options[idx];
+                    idx = _optionconstants.indexWhere(
+                            (element) => element.id == e.optionConstant!.id);
+                    // OptionConstant optionConstant = _optionconstants[idx];
                     return DataRow(cells: [
                       DataCell(
-                          Text((_model!.optionSet!.indexOf(e) + 1).toString())),
-                      DataCell(StatefulBuilder(
-                        builder: (context, setState) {
-                          return DropdownButton<OptionConstant>(
-                            items: _options
-                                .map<DropdownMenuItem<OptionConstant>>((elc) {
-                              return DropdownMenuItem(
-                                  child: Text(
-                                    elc.namerus!,
-                                    style: TextStyle(fontSize: 15),
-                                  ),
-                                  value: elc);
-                            }).toList(),
-                            value: optionConstant,
-                            onChanged: (OptionConstant? newoptionConstant) {
-                              setState(() {
-                                optionConstant = newoptionConstant!;
-                              });
-                            },
-                          );
-                        },
+                          Text((_listOptionSet.indexOf(e) + 1).toString())),
+                      DataCell(Text(
+                        e.optionConstant!.namerus!,
+                        style: TextStyle(fontSize: 15),
                       )),
                       DataCell(Text(e.optionname!), showEditIcon: true,
                           onTap: () {
-                        editOptionName(e).then((value) {
-                          setState(() {
-                            e.optionname = value;
-                          });
-                        });
-                      }),
+                            editOptionName(e).then((value) {
+                              setState(() {
+                                e.optionname = value;
+                              });
+
+                              modelBloc!
+                                  .addOption(
+                                  "modeloption", e, _model!.id.toString())
+                                  .then((value) {});
+                            });
+                          }),
                       DataCell(Icon(Icons.delete), onTap: () {
                         Map<String, dynamic> param = {'id': e.id.toString()};
-                        optionBloc!.remove('optionremove', param).then((value) {
+                        optionBloc!.remove('removeoption', param).then((value) {
+
+                          modelBloc!.add(ProducerLoadEvent());
+
                           setState(() {
-                            _model!.optionSet!.remove(e);
+                            _listOptionSet.remove(e);
                             // optionTable(context, setState);
                           });
                         });
@@ -253,9 +251,10 @@ class _ModelOptionState extends State<ModelOption> {
     return newOptinName;
   }
 
-  Future<void> shownewdialog(BuildContext context, setState) async {
+  Future<void> shownewdialog() async {
     OptionConstant? optionConstant;
     TextEditingController optionController = TextEditingController();
+    _optionconstants.sort((a, b) => a.namerus!.compareTo(b.namerus!));
 
     return await showDialog(
         context: context,
@@ -268,24 +267,24 @@ class _ModelOptionState extends State<ModelOption> {
               child: Column(
                 children: [
                   Container(
-                      // width: MediaQuery.of(context).size.width,
+                    // width: MediaQuery.of(context).size.width,
                       child: StatefulBuilder(
-                    builder: (context, setState) {
-                      return DropdownButton<OptionConstant>(
-                          isExpanded: true,
-                          value: optionConstant,
-                          items: _options
-                              .map<DropdownMenuItem<OptionConstant>>((e) =>
+                        builder: (context, setState) {
+                          return DropdownButton<OptionConstant>(
+                              isExpanded: true,
+                              value: optionConstant,
+                              items: _optionconstants
+                                  .map<DropdownMenuItem<OptionConstant>>((e) =>
                                   DropdownMenuItem(
                                       child: Text(e.namerus!), value: e))
-                              .toList(),
-                          onChanged: (OptionConstant? newoption) {
-                            setState(() {
-                              optionConstant = newoption;
-                            });
-                          });
-                    },
-                  )),
+                                  .toList(),
+                              onChanged: (OptionConstant? newoption) {
+                                setState(() {
+                                  optionConstant = newoption;
+                                });
+                              });
+                        },
+                      )),
                   Container(
                     child: TextFormField(
                       controller: optionController,
@@ -300,18 +299,27 @@ class _ModelOptionState extends State<ModelOption> {
               ElevatedButton(
                   onPressed: () {
                     OptionSet optionSet = OptionSet(
-                        // id: _model!.optionSet!.length + 1,
+                      // id: _model!.optionSet!.length + 1,
                         optionConstant: optionConstant,
+                        // active: 'ACTIVE',
                         optionname: optionController.text);
 
-                    optionBloc!
+                    modelBloc!
                         .addOption(
-                            "modelcreate", optionSet, _model!.id.toString())
+                        "modeloption", optionSet, _model!.id.toString())
                         .then((value) {
+                      modelBloc!.add(ProducerLoadEvent());
+
+                      // setState(() {
+                      //   _listOptionSet = value.optionSet!;
+                      // });
+
+                      // modelBloc!.repository.getAllModels().then((value) {
+
+                      // _listOptionSet = value.optionSet!;
+                      // });
+
                       // getApiAll();
-                      setState(() {
-                        _model!.optionSet!.add(optionSet);
-                      });
 
                       // optionTable(context, setState);
                       // _model = value;//
