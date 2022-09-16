@@ -203,7 +203,7 @@ class _OptionConstantPageState extends State<OptionConstantPage> {
                 ),
               ),
               actions: [
-                FlatButton(
+                ElevatedButton(
                   onPressed: () {
                     if (_formkeyname.currentState!.validate() == false) {
                       return;
@@ -223,7 +223,7 @@ class _OptionConstantPageState extends State<OptionConstantPage> {
                   },
                   child: Text("Сохранить"),
                 ),
-                FlatButton(
+                ElevatedButton(
                   onPressed: () {
                     Navigator.of(context).pop();
                   },

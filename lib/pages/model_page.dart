@@ -438,7 +438,10 @@ class _ModelPageState extends State<ModelPage> {
                         modelBloc
                             .postImage(
                             "modelupload", value.id.toString(), _webImage!)
-                            .then((value) {});
+                            .then((value) {
+                          modelBloc.add(ProducerLoadEvent());
+
+                        });
                       } else {
                         modelBloc.add(ProducerLoadEvent());
                       }

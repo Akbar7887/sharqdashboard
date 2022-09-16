@@ -247,7 +247,7 @@ class _SectionPageState extends State<SectionPage> {
                 ),
               ),
               actions: [
-                FlatButton(
+                ElevatedButton(
                   onPressed: () {
                     if (_formkeyname.currentState!.validate() == false ||
                         _formkeynameuz.currentState!.validate() == false) {
@@ -281,7 +281,7 @@ class _SectionPageState extends State<SectionPage> {
                   },
                   child: Text("Сохранить"),
                 ),
-                FlatButton(
+                ElevatedButton(
                   onPressed: () {
                     Navigator.of(context).pop();
                   },

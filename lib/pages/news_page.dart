@@ -250,7 +250,7 @@ class _NewsPageState extends State<NewsPage> {
                 ),
               ),
               actions: [
-                FlatButton(
+                ElevatedButton(
                   onPressed: () {
                     if (_formkeytitle.currentState!.validate() == false ||
                         _formkeydescription.currentState!.validate() == false) {
@@ -286,7 +286,7 @@ class _NewsPageState extends State<NewsPage> {
                   },
                   child: Text("Сохранить"),
                 ),
-                FlatButton(
+                ElevatedButton(
                   onPressed: () {
                     Navigator.of(context).pop();
                   },

@@ -280,7 +280,7 @@ class _ProducerPageState extends State<ProducerPage> {
                 ),
               ),
               actions: [
-                FlatButton(
+                ElevatedButton(
                   onPressed: () {
                     if (_formkeyname.currentState!.validate() == false) {
                       return;
@@ -321,7 +321,7 @@ class _ProducerPageState extends State<ProducerPage> {
                   },
                   child: Text("Сохранить"),
                 ),
-                FlatButton(
+                ElevatedButton(
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
