@@ -308,10 +308,7 @@ class _ModelOptionState extends State<ModelOption> {
                         .addOption(
                         "modeloption", optionSet, _model!.id.toString())
                         .then((value) {
-                          // setState(() {
-                            modelBloc!.add(ProducerLoadEvent());
-                            // _listOptionSet = value.optionSet!;
-                          // });
+                      modelBloc!.add(ProducerLoadEvent());
 
                       // setState(() {
                       //   _listOptionSet = value.optionSet!;
