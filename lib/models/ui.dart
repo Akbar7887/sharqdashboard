@@ -5,9 +5,9 @@ class Ui {
   static final String fullname = "ООО \"Sharq-motors\"";
 
   static final String url =
-      "http://localhost:8087/api/"; //;
+      "https://localhost:8083/sharq/"; //;
   static final String urllogin =
-      "http://localhost:8087";
+      "https://localhost:8083";
   // static final String url =
   //     'http://192.168.1.251:8087/api/';
   //

@@ -1,19 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sharqmotors/bloc/customerorder_bloc.dart';
-import 'package:sharqmotors/bloc/rate_bloc.dart';
-import 'package:sharqmotors/pages/order_page.dart';
 import 'package:sharqmotors/pages/producer_page.dart';
 import 'package:sharqmotors/pages/rate_page.dart';
 
 import '../bloc/customer_bloc.dart';
+import '../bloc/customerorder_bloc.dart';
 import '../bloc/model_bloc.dart';
 import '../bloc/newscompany_bloc.dart';
 import '../bloc/option_bloc.dart';
 import '../bloc/option_constant_bloc.dart';
 import '../bloc/producer_bloc.dart';
 import '../bloc/producer_event.dart';
+import '../bloc/rate_bloc.dart';
 import '../bloc/section_bloc.dart';
 import '../models/ui.dart';
 import '../provider/simle_provider.dart';
@@ -22,6 +21,7 @@ import 'model_option.dart';
 import 'model_page.dart';
 import 'news_page.dart';
 import 'option_constant_page.dart';
+import 'order_page.dart';
 import 'section_page.dart';
 
 class Home extends StatefulWidget {
@@ -44,8 +44,8 @@ class _HomeState extends State<Home> {
                     ..add(ProducerLoadEvent())),
               BlocProvider(
                 create: (context) =>
-                    ModelBloc(repository: context.read<Repository>())
-                      ..add(ProducerLoadEvent()),
+                ModelBloc(repository: context.read<Repository>())
+                  ..add(ProducerLoadEvent()),
               ),
               BlocProvider(
                 create: (context) =>
@@ -53,26 +53,26 @@ class _HomeState extends State<Home> {
               ),
               BlocProvider(
                 create: (context) =>
-                    SectionBloc(repository: context.read<Repository>())
-                      ..add(ProducerLoadEvent()),
+                SectionBloc(repository: context.read<Repository>())
+                  ..add(ProducerLoadEvent()),
               ),
               BlocProvider(
                 create: (context) =>
-                    NewsCompanyBloc(repository: context.read<Repository>())
-                      ..add(ProducerLoadEvent()),
+                NewsCompanyBloc(repository: context.read<Repository>())
+                  ..add(ProducerLoadEvent()),
               ),
               BlocProvider(
                 create: (context) =>
-                    OptionConstantBloc(repository: context.read<Repository>())
-                      ..add(ProducerLoadEvent()),
+                OptionConstantBloc(repository: context.read<Repository>())
+                  ..add(ProducerLoadEvent()),
               ),
               BlocProvider(
                 create: (context) =>
                     OptionBloc(repository: context.read<Repository>()),
               ),
               BlocProvider(
-                create: (context) =>
-                    RateBloc(repository: context.read<Repository>())
+                  create: (context) =>
+                  RateBloc(repository: context.read<Repository>())
                     ..add(ProducerLoadEvent())
               ),
               BlocProvider(
@@ -94,7 +94,7 @@ class _HomeState extends State<Home> {
       children: [
         Expanded(
             child: Container(
-                //
+              //
                 color: Colors.black45,
                 child: Column(
                   // mainAxisAlignment: MainAxisAlignment.start,
@@ -108,7 +108,7 @@ class _HomeState extends State<Home> {
                         child: Container(
                             alignment: Alignment.centerLeft,
                             child: Text(
-                              "Тип автотранспорта",
+                              "Группа спецтехники",
                               style: TextStyle(fontSize: 15),
                             )),
                       ),
